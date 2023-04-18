@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "14453193-6b12-463e-89af-0e0b41b64345",
+		"name": "Mock API Response",
+		"description": "In this collection, I have Mock an API response, designed & execute the test cases over mocked response.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26140461"
+	},
+	"item": [
+		{
+			"name": "Mock Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is in JSON format\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+							"});",
+							"",
+							"pm.test(\"First data item has expected values\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data[0].id).to.eql(1);",
+							"    pm.expect(jsonData.data[0].email).to.eql(\"aditya.singh@knoldus.com\");",
+							"    pm.expect(jsonData.data[0].first_name).to.eql(\"Aditya\");",
+							"    pm.expect(jsonData.data[0].last_name).to.eql(\"Singh\");",
+							"    pm.expect(jsonData.data[0].avatar).to.eql(\"https://reqres.in/img/faces/1-image.jpg\");",
+							"});",
+							"",
+							"pm.test(\"All IDs are unique\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    const idSet = new Set(jsonData.data.map(item => item.id));",
+							"    pm.expect(idSet.size).to.eql(jsonData.data.length);",
+							"});",
+							"",
+							"pm.test(\"All IDs are in sequence\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    for (let i = 0; i < jsonData.data.length; i++) {",
+							"        pm.expect(jsonData.data[i].id).to.eql(i + 1);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"All first names and last names are capitalized\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    for (let i = 0; i < jsonData.data.length; i++) {",
+							"        const firstName = jsonData.data[i].first_name;",
+							"        const lastName = jsonData.data[i].last_name;",
+							"        pm.expect(firstName.charAt(0)).to.match(/[A-Z]/);",
+							"        pm.expect(lastName.charAt(0)).to.match(/[A-Z]/);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response contains only the expected fields\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    for (let i = 0; i < jsonData.data.length; i++) {",
+							"        const itemKeys = Object.keys(jsonData.data[i]);",
+							"        pm.expect(itemKeys).to.eql([\"id\", \"email\", \"first_name\", \"last_name\", \"avatar\"]);",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Response contains the expected number of data items\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.eql(jsonData.per_page);",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://90a4cdf5-4056-4c2b-941d-d49f274cd95a.mock.pstmn.io",
+					"protocol": "https",
+					"host": [
+						"90a4cdf5-4056-4c2b-941d-d49f274cd95a",
+						"mock",
+						"pstmn",
+						"io"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Mock Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://90a4cdf5-4056-4c2b-941d-d49f274cd95a.mock.pstmn.io",
+							"protocol": "https",
+							"host": [
+								"90a4cdf5-4056-4c2b-941d-d49f274cd95a",
+								"mock",
+								"pstmn",
+								"io"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"page\": 1,\n    \"per_page\": 7,\n    \"total\": 12,\n    \"total_pages\": 2,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"email\": \"aditya.singh@knoldus.com\",\n            \"first_name\": \"Aditya\",\n            \"last_name\": \"Singh\",\n            \"avatar\": \"https://reqres.in/img/faces/1-image.jpg\"\n        },\n        {\n            \"id\": 2,\n            \"email\": \"shivam.singh@knoldus.com\",\n            \"first_name\": \"Shivam\",\n            \"last_name\": \"Singh\",\n            \"avatar\": \"https://reqres.in/img/faces/2-image.jpg\"\n        },\n        {\n            \"id\": 3,\n            \"email\": \"kajal.kumari@knoldus.com\",\n            \"first_name\": \"Kajal\",\n            \"last_name\": \"Kumari\",\n            \"avatar\": \"https://reqres.in/img/faces/3-image.jpg\"\n        },\n        {\n            \"id\": 4,\n            \"email\": \"akash.singh@knoldus.com\",\n            \"first_name\": \"Akash\",\n            \"last_name\": \"Singh\",\n            \"avatar\": \"https://reqres.in/img/faces/4-image.jpg\"\n        },\n        {\n            \"id\": 5,\n            \"email\": \"manish.mishra@knoldus.com\",\n            \"first_name\": \"Manish\",\n            \"last_name\": \"Mishra\",\n            \"avatar\": \"https://reqres.in/img/faces/5-image.jpg\"\n        },\n        {\n            \"id\": 6,\n            \"email\": \"aman.srivastava@knoldus.com\",\n            \"first_name\": \"Aman\",\n            \"last_name\": \"Srivastava\",\n            \"avatar\": \"https://reqres.in/img/faces/6-image.jpg\"\n        },\n    {\n            \"id\": 7,\n            \"email\": \"gauarav.shukla@knoldus.com\",\n            \"first_name\": \"Gaurav\",\n            \"last_name\": \"Shukla\",\n            \"avatar\": \"https://reqres.in/img/faces/6-image.jpg\"\n    }     \n    ]\n}"
+				}
+			]
+		}
+	]
+}
