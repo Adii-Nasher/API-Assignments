@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "fa02f412-2081-4a79-8a1f-440d281a14e2",
+		"name": "JS Library",
+		"description": "In this collection, I have used some JS Library and running this collection using CI/CD Tool i.e. Jenkins",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26140461"
+	},
+	"item": [
+		{
+			"name": "Request using JS library",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const lodash = require('lodash');",
+							"",
+							"const delay = lodash.random(1000, 5000);",
+							"",
+							"pm.test(`Delaying request by ${delay} milliseconds...`, function () {",
+							"  setTimeout(() => {",
+							"    console.log('Request delayed.');",
+							"    pm.sendRequest();",
+							"  }, delay);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const chai = require('chai');",
+							"",
+							"const expect = chai.expect;",
+							"",
+							"const body = pm.response.json();",
+							"",
+							"const userCount = body.data.length;",
+							"",
+							"pm.test('User API should return at least 1 user', function () {",
+							"  expect(userCount).to.be.at.least(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
